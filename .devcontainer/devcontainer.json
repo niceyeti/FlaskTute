@@ -12,7 +12,8 @@
             "username": "vscode",
             "userUid": "1000",
             "userGid": "1000",
-            "upgradePackages": "true"
+            "upgradePackages": "true",
+            "foo": "bar"
         },
         "ghcr.io/devcontainers/features/python:1": "none",
         "ghcr.io/devcontainers/features/node:1": "none",
