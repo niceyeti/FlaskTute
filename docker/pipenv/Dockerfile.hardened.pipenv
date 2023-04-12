@@ -1,0 +1,29 @@
+# ARG BASE_REGISTRY=registry1.dso.mil
+# ARG BASE_IMAGE=ironbank/opensource/python
+# ARG BASE_TAG=v3.10.11
+
+#FROM dependencytrack/frontend:latest AS upstream
+FROM ${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
+
+USER 0
+
+RUN dnf upgrade -y --nodocs && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
+# Python, don't write bytecode!
+ENV PYTHONDONTWRITEBYTECODE 1
+
+#Installing Pipenv Dependencies
+COPY requirements.txt . 
+
+RUN pip3 install -r requirements.txt 
+
+WORKDIR /app
+
+USER 1001
+
+HEALTHCHECK NONE
